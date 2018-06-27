@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/">
+<head>
+    <meta charset="UTF-8"/>
+    <title th:text="${title}">Default Title</title>
+</head>
+<body>
+<h2 th:text="${title}"></h2>
+
+<p th:unless="${categoryList} and ${categoryList.size()}"> no categories</p>
+
+<ul th:each="category : ${categoryList}">
+
+    <li th:text="${category.name}"></li>
+
+</ul>
+
+<a href="/category/add">Add Category</a>
+</body>
+</html>
