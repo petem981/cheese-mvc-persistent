@@ -1,7 +1,6 @@
 package org.launchcode.controllers;
 
 import org.launchcode.models.Cheese;
-import org.launchcode.models.CheeseType;
 import org.launchcode.models.data.CheeseDao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -44,14 +43,38 @@ public class CheeseController {
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute  @Valid Cheese newCheese,
-                                       Errors errors, Model model) {
+                                       Errors errors,
+                                       @RequestParam int categoryId,
+                                       Model model) {
+
+        Category cat = categoryDao.findOne(categoryId);
+        newCheese.setCategory(cat);
 
         if (errors.hasErrors()) {
             model.addAttribute("title", "Add Cheese");
+            model.addAttribute("categories", categoryDao.findAll());
             return "cheese/add";
         }
 
         cheeseDao.save(newCheese);
+        return "redirect:";
+    }
+
+
+    @RequestMapping(value = "edit/{cheeseId}", method = RequestMethod.GET)
+    public String displayEditForm(Model model, @PathVariable int cheeseId){
+        model.addAttribute("cheese", cheeseDao.findOne(cheeseId));
+
+        return "cheese/edit";
+    }
+
+    @RequestMapping(value = "edit", method = RequestMethod.POST)
+    public String processEditForm(int cheeseId, String name, String description) {
+        Cheese cheese = cheeseDao.findOne(cheeseId);
+        cheese.setName(name);
+        cheese.setDescription(description);
+        cheeseDao.save(cheese);
+
         return "redirect:";
     }
 
@@ -70,6 +93,17 @@ public class CheeseController {
         }
 
         return "redirect:";
+
+    @RequestMapping(value = "category/{id}", method = RequestMethod.GET)
+    public String category(Model model, @PathVariable int id){
+
+        Category cat = categoryDao.findOne(id);
+
+
+        model.addAttribute("cheeses", cat.getCheeses());
+        model.addAttribute("title", "All " + cat.getName() + " Cheeses");
+        return "cheese/index";
+
     }
 
 }
