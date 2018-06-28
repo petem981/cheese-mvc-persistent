@@ -28,6 +28,7 @@ public class CheeseController {
 
     @Autowired
     private CategoryDao categoryDao;
+    private Cheese newCheese;
 
     // Request path: /cheese
     @RequestMapping(value = "")
@@ -51,6 +52,7 @@ public class CheeseController {
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese,
                                        Errors errors, @RequestParam int categoryId, Model model) {
+        this.newCheese = newCheese;
 
         Category cat = categoryDao.findOne(categoryId);
         newCheese.setCategory(cat);
