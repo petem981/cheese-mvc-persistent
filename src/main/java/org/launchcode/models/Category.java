@@ -21,7 +21,7 @@ public class Category {
     @JoinColumn(name = "category_id")
     private List<Cheese> cheeses = new ArrayList<>();
 
-    public Category() {}
+    public Category() {    }
 
     public Category(String name) {
         this(); this.name = name;
