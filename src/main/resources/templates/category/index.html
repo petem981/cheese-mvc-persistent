@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8"/>
     <title th:text="${title}">Default Title</title>
+    <nav th:replace="fragments :: navigation"></nav>
 </head>
 <body>
 <h2 th:text="${title}"></h2>
@@ -16,5 +17,6 @@
 </ul>
 
 <a href="/category/add">Add Category</a>
+
 </body>
 </html>

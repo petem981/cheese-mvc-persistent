@@ -55,4 +55,7 @@ public class Menu {
     }
 
 
+    public void setCheeses(List<Cheese> cheeses) {
+        this.cheeses = cheeses;
+    }
 }
