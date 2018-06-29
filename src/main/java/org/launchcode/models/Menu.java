@@ -26,10 +26,6 @@ public class Menu {
     public Menu() {
     }
 
-    public void setCheeses(List<Cheese> cheeses) {
-        this.cheeses = cheeses;
-    }
-
     public Menu(String name) {
         this.name = name;
     }
