@@ -20,6 +20,16 @@
     <div class="form-group">
         <input type="hidden" th:value="${cheese.id}" name="cheeseId" />
     </div>
+
+    <div class="form-group">
+        <label th:for="type">Type</label>
+        <input class="form-control" th:field="*{category.id}" name="type"/>
+        <select name="categoryId">
+            <option th:each="category : ${categories}"
+                    th:text="${category.name}"
+                    th:value="${category.id}"></option>
+        </select>
+    </div>
     <input type="submit" value="Add Cheese" />
 </form>
 

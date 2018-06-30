@@ -28,6 +28,7 @@ public class CheeseController {
 
     @Autowired
     private CategoryDao categoryDao;
+
     private Cheese newCheese;
 
     // Request path: /cheese
@@ -45,26 +46,23 @@ public class CheeseController {
     public String displayAddCheeseForm(Model model) {
         model.addAttribute("title", "Add Cheese");
         model.addAttribute(new Cheese());
-        model.addAttribute("categories", categoryDao.findAll());
+        Model categories = model.addAttribute("categories", categoryDao.findAll());
         return "cheese/add";
     }
 
     @RequestMapping(value = "add", method = RequestMethod.POST)
     public String processAddCheeseForm(@ModelAttribute @Valid Cheese newCheese,
                                        Errors errors, @RequestParam int categoryId, Model model) {
+        if (errors.hasErrors()) {
+            model.addAttribute("title", "Add Cheese");
+            model.addAttribute("categories", categoryDao.findAll());
+            return "cheese/add";
+        }
+
         this.newCheese = newCheese;
 
         Category cat = categoryDao.findOne(categoryId);
         newCheese.setCategory(cat);
-
-        if (errors.hasErrors()) {
-            model.addAttribute("title", "Add Cheese");
-            model.addAttribute("categories", categoryDao.findAll());
-
-
-            return "cheese/add";
-        }
-
         cheeseDao.save(newCheese);
         return "redirect:";
     }
@@ -108,8 +106,7 @@ public class CheeseController {
     public String category(Model model, @PathVariable int id){
 
         Category cat = categoryDao.findOne(id);
-
-
+        List<Cheese> cheeses = cat.getCheeses();
         model.addAttribute("cheeses", cat.getCheeses());
         model.addAttribute("title", "All " + cat.getName() + " Cheeses");
         return "cheese/index";

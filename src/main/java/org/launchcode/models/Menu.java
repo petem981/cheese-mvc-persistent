@@ -8,6 +8,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.List;
 
+
+
 @Entity
 public class Menu {
 
@@ -22,19 +24,13 @@ public class Menu {
     @ManyToMany
     private List<Cheese> cheeses;
 
-
-    public Menu() {
+    public void addItem(Cheese item) {
+        cheeses.add(item);
     }
+
+    public Menu() {}
 
     public Menu(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
         this.name = name;
     }
 
@@ -46,14 +42,17 @@ public class Menu {
         this.id = id;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
     public List<Cheese> getCheeses() {
         return cheeses;
     }
-
-    public void addItem(Cheese item) {
-        cheeses.add(item);
-    }
-
 
     public void setCheeses(List<Cheese> cheeses) {
         this.cheeses = cheeses;
