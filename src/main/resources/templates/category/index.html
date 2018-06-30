@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org/">
-<head>
-    <meta charset="UTF-8"/>
-    <title th:text="${title}">Default Title</title>
-    <nav th:replace="fragments :: navigation"></nav>
-</head>
-<body>
-<h2 th:text="${title}"></h2>
+<head th:replace="fragments :: head"></head>
 
-<p th:unless="${categoryList} and ${categoryList.size()}">no categories</p>
+<body class="container">
+<meta charset="UTF-8"/>
+<title th:text="${title}">Default Title</title>
+<h1 th:text="${title}"></h1>
 
-<ul th:each="category : ${categoryList}">
+<nav th:replace="fragments :: navigation"></nav>
 
-    <li th:text="${category.name}"></li>
+    <p th:unless="${categoryList} and ${categoryList.size()}">no categories</p>
 
-</ul>
+    <ul th:each="category : ${categoryList}">
 
-<a href="/category/add">Add Category</a>
+        <li th:text="${category.name}"></li>
+
+    </ul>
+
+    <a href="/category/add">Add Category</a>
 
 </body>
 </html>
